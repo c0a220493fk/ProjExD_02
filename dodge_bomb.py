@@ -5,8 +5,8 @@ import random
 
 WIDTH, HEIGHT = 1600, 900
 
-delta = {
-pg.K_UP: (0, -5),
+delta = {  # 練習3：押したキーと移動量の辞書
+pg.K_UP: (0, -5),  # キー：移動量/値：（横方向移動量：縦方向移動量）
 pg.K_DOWN: (0, +5),
 pg.K_LEFT: (-5, 0),
 pg.K_RIGHT: (+5, 0)
@@ -20,9 +20,9 @@ def check_bound(rct: pg.Rect) -> tuple[bool, bool]:
     """
     
     yoko, tate = True, True
-    if rct.left < 0 or WIDTH < rct.right:
+    if rct.left < 0 or WIDTH < rct.right:  # 横方向はみ出し判定
         yoko = False
-    if rct.top < 0 or HEIGHT < rct.bottom:
+    if rct.top < 0 or HEIGHT < rct.bottom:  # 縦方向はみ出し判定
         tate = False
     return yoko, tate
 
@@ -37,12 +37,12 @@ def main():
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
     bb_img = pg.Surface((20, 20))  # 練習1：透明なsurfaceを作る
-    bb_img.set_colorkey((0, 0, 0))
-    pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)
+    bb_img.set_colorkey((0, 0, 0))  # 練習1：黒い部分を透明にする
+    pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)  # 練習1：赤い半径10の円を描く
     bb_rct = bb_img.get_rect()  # 練習2：surfaceのrectを抽出する
     bb_rct.centerx = random.randint(0, WIDTH)
     bb_rct.centery = random.randint(0, HEIGHT)
-    vx, vy = -5, +5
+    vx, vy = -5, +5  # 練習2：爆弾の速度
 
     clock = pg.time.Clock()
     tmr = 0
@@ -66,13 +66,13 @@ def main():
         kk_rct.move_ip(sum_mv[0], sum_mv[1])
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
-        screen.blit(kk_img, kk_rct)
-        bb_rct.move_ip(vx, vy)
+        screen.blit(kk_img, kk_rct)  # 練習3：こうかとんを移動させる
+        bb_rct.move_ip(vx, vy)  # 練習2：爆弾を移動させる
         yoko, tate = check_bound(bb_rct)
         if not yoko:
-            vx *= -1
+            vx *= -1  # 横方向にはみ出たら
         if not tate:
-            vy *= -1
+            vy *= -1  # 縦方向にはみ出たら
         bb_rct.move_ip(vx, vy)
         screen.blit(bb_img, bb_rct)
         pg.display.update()
