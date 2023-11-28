@@ -100,7 +100,7 @@ def main():
             kk_imga = pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), -45, 2.0)
 
         elif sum_mv == [0, 0]:
-            screen.blit(kk_imga, kk_rct)
+            screen.blit(kk_imga, kk_rct)  # 方向の保持
 
         bb_rct.move_ip(vx, vy)  # 練習2：爆弾を移動させる
         yoko, tate = check_bound(bb_rct)
