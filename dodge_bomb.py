@@ -33,7 +33,7 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
-    #kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_imga = pg.transform.rotozoom(kk_img, 0, 2.0)
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
     bb_img = pg.Surface((20, 20))  # 練習1：透明なsurfaceを作る
@@ -67,30 +67,41 @@ def main():
         if check_bound(kk_rct) != (True, True):
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
 
-        if sum_mv == [-5, 0] or sum_mv == [0, 0]:
+        if sum_mv == [-5, 0]:
             screen.blit(pg.transform.rotozoom(kk_img, 0, 2.0), kk_rct)  # 練習3：こうかとんを移動させる　# 中央＋左
+            kk_imga = pg.transform.rotozoom(kk_img, 0, 2.0)
 
         elif sum_mv == [5, 0]:
             screen.blit(pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), 0, 2.0), kk_rct)  # 右
+            kk_imga = pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), 0, 2.0)
 
         elif sum_mv == [0, -5]:
             screen.blit(pg.transform.rotozoom(pg.transform.flip(kk_img, False, True), 270, 2.0), kk_rct)  # 上
+            kk_imga = pg.transform.rotozoom(pg.transform.flip(kk_img, False, True), 270, 2.0)
 
         elif sum_mv == [0, 5]:
             screen.blit(pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), 270, 2.0), kk_rct)  # 下
-        
+            kk_imga = pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), 270, 2.0)
+
         elif sum_mv == [-5, -5]:
             screen.blit(pg.transform.rotozoom(kk_img, -45, 2.0), kk_rct)  # 左上
+            kk_imga = pg.transform.rotozoom(kk_img, -45, 2.0)
 
         elif sum_mv == [-5, 5]:
             screen.blit(pg.transform.rotozoom(kk_img, 45, 2.0), kk_rct)  #左下
+            kk_imga = pg.transform.rotozoom(kk_img, 45, 2.0)
 
         elif sum_mv == [5, -5]:
             screen.blit(pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), 45, 2.0), kk_rct)  # 右上
+            kk_imga = pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), 45, 2.0)
 
-        else:
+        elif sum_mv == [5, 5]:
             screen.blit(pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), -45, 2.0), kk_rct)  # 右下
-        
+            kk_imga = pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), -45, 2.0)
+
+        elif sum_mv == [0, 0]:
+            screen.blit(kk_imga, kk_rct)
+
         bb_rct.move_ip(vx, vy)  # 練習2：爆弾を移動させる
         yoko, tate = check_bound(bb_rct)
         if not yoko:
